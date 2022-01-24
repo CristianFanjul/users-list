@@ -9,6 +9,7 @@ interface UsersDataSource {
     suspend fun editUser(user: User): Result<Unit>
     suspend fun deleteUser(userId: String): Result<Unit>
     suspend fun requestUser(userId: String): Result<User>
+    suspend fun addUser(user: User): Result<Unit>
 }
 
 class UsersDataSourceImpl @Inject constructor(
@@ -38,6 +39,12 @@ class UsersDataSourceImpl @Inject constructor(
         val user = api.requestUser(userId)
         user?.let { Result.success(user) }
             ?: Result.failure(RuntimeException("User does not exist."))
+    } catch (e: Exception) {
+        Result.failure(e)
+    }
+
+    override suspend fun addUser(user: User): Result<Unit> = try {
+        Result.success(api.addUser(user))
     } catch (e: Exception) {
         Result.failure(e)
     }

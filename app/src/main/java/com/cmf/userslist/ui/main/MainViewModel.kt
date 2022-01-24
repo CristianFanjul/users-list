@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cmf.userslist.domain.usecase.AddUserUseCase
 import com.cmf.userslist.domain.usecase.DeleteUserUseCase
 import com.cmf.userslist.domain.usecase.GetUsersUseCase
+import com.cmf.userslist.model.User
 import com.cmf.userslist.ui.UserMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase,
-    private val removeUserUseCase: DeleteUserUseCase
+    private val removeUserUseCase: DeleteUserUseCase,
+    private val addUserUseCase: AddUserUseCase
 ) : ViewModel() {
 
     private val _items = MutableLiveData<List<UserUiModel>>()
@@ -44,6 +47,16 @@ class MainViewModel @Inject constructor(
             } else {
                 _message.value = "Something went wrong while deleting user."
             }
+        }
+    }
+
+    fun addUser() {
+        viewModelScope.launch {
+            val newUser = User(
+                Math.random().toString(), "Name PH", "Lastname PH", "Bio PH", ""
+            )
+            addUserUseCase.invoke(newUser)
+            loadUsers()
         }
     }
 }

@@ -50,6 +50,10 @@ class MainFragment : Fragment(), OnUserClickListener {
         viewModel.message.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
         }
+
+        binding.fab.setOnClickListener {
+            viewModel.addUser()
+        }
     }
 
     override fun onDestroyView() {

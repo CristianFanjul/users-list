@@ -9,6 +9,7 @@ interface Api {
     suspend fun editUser(user: User)
     suspend fun deleteUser(userId: String)
     suspend fun requestUser(userId: String): User?
+    suspend fun addUser(user: User)
 }
 
 class FakeApi @Inject constructor() : Api {
@@ -28,6 +29,10 @@ class FakeApi @Inject constructor() : Api {
 
     override suspend fun requestUser(userId: String): User? {
         return users.firstOrNull { it.id == userId }
+    }
+
+    override suspend fun addUser(user: User) {
+        users.add(user)
     }
 
 }

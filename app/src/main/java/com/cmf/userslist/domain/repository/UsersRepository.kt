@@ -12,6 +12,7 @@ interface UsersRepository {
     suspend fun editUser(user: User): Result<Unit>
     suspend fun deleteUser(userId: String): Result<Unit>
     suspend fun requestUser(userId: String): Result<User>
+    suspend fun addUser(user: User): Result<Unit>
 }
 
 class UsersRepositoryImpl @Inject constructor(
@@ -33,5 +34,9 @@ class UsersRepositoryImpl @Inject constructor(
 
     override suspend fun requestUser(userId: String): Result<User> = withContext(ioDispatcher) {
         dataSource.requestUser(userId)
+    }
+
+    override suspend fun addUser(user: User): Result<Unit> = withContext(ioDispatcher) {
+        dataSource.addUser(user)
     }
 }
