@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">UsersList</string>
+    <string name="profile_name">Name</string>
+    <string name="profile_lastname">Lastname</string>
+    <string name="profile_biography">Biography</string>
+    <string name="profile_save">Save</string>
+</resources>
